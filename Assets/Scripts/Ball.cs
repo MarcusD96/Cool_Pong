@@ -1,4 +1,5 @@
 ﻿
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class Ball : MonoBehaviour {
@@ -18,7 +19,7 @@ public class Ball : MonoBehaviour {
 
     public LayerMask mask;
 
-    private float startTime, spawnTime = 5.0f;
+    private float startTime, spawnTime = 3.0f;
 
     // Start is called before the first frame update
     void Start() {
@@ -38,7 +39,7 @@ public class Ball : MonoBehaviour {
 
         lastPos = transform.position;
 
-        startTime = Time.deltaTime;
+        startTime = Time.time;
     }
 
     // Update is called once per frame
@@ -47,8 +48,7 @@ public class Ball : MonoBehaviour {
             play = true;
             Cursor.visible = false;
         }
-
-        if(Time.unscaledDeltaTime >= startTime + spawnTime)
+        if(Time.time >= startTime + spawnTime)
             play = true;
 
         if(play == false)
