@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
@@ -6,15 +7,20 @@ public class Enemy : MonoBehaviour {
     public float speed;
     public SpriteRenderer sprite;
 
-    private float offset = 0.2f;
-    private Ball ball;
+    private float offset = 0.5f, dt;
     private Vector2 pos;
 
+    private Ball currentBall;
+    private List<Ball> balls;
     void Awake() {
         if(speed <= 0)
             speed = 3;
 
         pos = transform.position;
+    }
+
+    void Start() {
+        dt = Time.deltaTime;        
     }
 
     void FixedUpdate() {
@@ -26,16 +32,16 @@ public class Enemy : MonoBehaviour {
     }
 
     void FollowBall() {
-        float posY = ball.transform.position.y;
+        float posY = currentBall.transform.position.y;
 
         if(posY > transform.position.y + offset) //move up
-            pos.y += speed * Time.deltaTime;
+            pos.y += speed * dt;
 
         else if(posY < transform.position.y - offset) //move down
-            pos.y -= speed * Time.deltaTime;
+            pos.y -= speed * dt;
 
         else
-            pos.y = Mathf.Lerp(pos.y, posY, speed * Time.deltaTime);
+            pos.y = Mathf.Lerp(pos.y, posY, speed * dt);
 
         transform.position = pos;
     }
@@ -49,7 +55,16 @@ public class Enemy : MonoBehaviour {
         transform.position = pos;
     }
 
-    public void SetBall(Ball ball_) {
-        ball = ball_;
+    public void SetCurrentBall(Ball ball_) {
+        currentBall = ball_;
+    }
+
+    void OnDrawGizmos() {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawRay(transform.position + Vector3.up, Vector3.left);
+        Gizmos.DrawRay(transform.position + Vector3.up / 2, Vector3.left);
+        Gizmos.DrawRay(transform.position, Vector3.left);
+        Gizmos.DrawRay(transform.position + Vector3.down / 2, Vector3.left);
+        Gizmos.DrawRay(transform.position + Vector3.down, Vector3.left);
     }
 }

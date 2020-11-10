@@ -13,9 +13,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Ball
+  - Paddle
+  - PowerUp
   - 
   - 
   - 
@@ -49,4 +49,7 @@ TagManager:
     locked: 0
   - name: Ball
     uniqueID: 1229731367
+    locked: 0
+  - name: PowerUp
+    uniqueID: 3537440959
     locked: 0
