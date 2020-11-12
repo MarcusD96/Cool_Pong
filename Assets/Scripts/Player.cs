@@ -1,15 +1,20 @@
 ﻿
 using UnityEngine;
+using Mirror;
 
-public class Player : MonoBehaviour {
+public class Player : NetworkBehaviour {
 
-    public float speed;
+    public float speed, mouseSpeed;
     public SpriteRenderer sprite;
 
     private float offset = 1.0f, dt;
     private Vector2 pos;
 
     Camera cam;
+
+    private bool mouseControl = false;
+
+    public static bool started = false;
 
     void Awake() {
         pos = transform.position;
@@ -18,11 +23,12 @@ public class Player : MonoBehaviour {
             speed = 3;
         if(offset <= 0)
             offset = 0.5f;
-
+        mouseSpeed = speed * 8;
         cam = Camera.main;
     }
 
     void Start() {
+        started = true;
         dt = Time.deltaTime;
     }
 
@@ -32,21 +38,34 @@ public class Player : MonoBehaviour {
 
 
     void Update() {
-        MoveVertically();
-        CheckBoundaries();
+        //single player
+        if(GameMode.isSingle) {
+            MoveVertically();
+            CheckBoundaries();
+            return;
+        } 
+        
+        //multiplayer
+        if(isLocalPlayer) {
+            MoveVertically();
+            CheckBoundaries();
+        }
     }
 
     void FollowMouseOnY() {
+        if(!mouseControl)
+            return;
+
         float targetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition).y;
 
         if(targetPos > transform.position.y + offset) //move up
-            transform.Translate(Vector3.up * speed * dt, Space.World);
+            transform.Translate(Vector3.up * mouseSpeed * dt, Space.World);
 
         else if(targetPos < transform.position.y - offset) //move down
-            transform.Translate(Vector3.down * speed * dt, Space.World);
+            transform.Translate(Vector3.down * mouseSpeed * dt, Space.World);
 
         else {
-            pos.y = Mathf.Lerp(pos.y, targetPos, speed * dt);
+            pos.y = Mathf.Lerp(pos.y, targetPos, mouseSpeed * dt);
             transform.position = pos;
             return;
         }
@@ -54,6 +73,9 @@ public class Player : MonoBehaviour {
     }
 
     void MoveVertically() {
+        if(mouseControl)
+            return;
+
         if(Input.GetKey(KeyCode.W)) {
             transform.Translate(Vector3.up * speed * dt, Space.World);
         }

@@ -11,7 +11,6 @@ public class Enemy : MonoBehaviour {
     private Vector2 pos;
 
     private Ball currentBall;
-    private List<Ball> balls;
     void Awake() {
         if(speed <= 0)
             speed = 3;
@@ -32,6 +31,9 @@ public class Enemy : MonoBehaviour {
     }
 
     void FollowBall() {
+        if(currentBall == null) {
+            return;
+        }
         float posY = currentBall.transform.position.y;
 
         if(posY > transform.position.y + offset) //move up

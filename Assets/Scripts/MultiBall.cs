@@ -9,6 +9,7 @@ public class MultiBall : PowerUp {
 
     void Awake() {
         gm = FindObjectOfType<GameManager>();
+        speed = 4;
     }
 
     new void Update() {

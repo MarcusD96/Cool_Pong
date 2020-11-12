@@ -44,10 +44,14 @@ public class Ball : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if(!Player.started)
+            return;
+
         if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) {
             play = true;
-            Cursor.visible = false;
+            //Cursor.visible = false;
         }
+
         if(Time.time >= startTime + spawnTime)
             play = true;
 
@@ -166,6 +170,10 @@ public class Ball : MonoBehaviour {
         }
     }
 
+    public Vector3 GetDirection() {
+        return direction;
+    }
+
     void ResetBall() {
         if(GameManager.ModifyBall_Static(this, true)) {
             return;
@@ -175,8 +183,8 @@ public class Ball : MonoBehaviour {
         MakeDirection();
         speedMultiplier = baseSpeed;
         play = false;
-        startTime = Time.deltaTime;
-        Cursor.visible = true;
+        startTime = Time.time;
+        //Cursor.visible = true;
     }
 
     void OnDrawGizmos() {

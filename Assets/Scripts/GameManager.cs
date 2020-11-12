@@ -34,34 +34,41 @@ public class GameManager : MonoBehaviour {
     void Start() {
         instance = this;
 
-        Instantiate(playerPrefab, playerSpawn.position, Quaternion.identity);
-        enemy = Instantiate(enemyPrefab, enemySpawn.position, Quaternion.identity);
+        if(GameMode.isSingle) {
+            Instantiate(playerPrefab, playerSpawn.position, Quaternion.identity);
+            enemy = Instantiate(enemyPrefab, enemySpawn.position, Quaternion.identity); 
+        }
         ball = Instantiate(ballPrefab, ballSpawn.position, Quaternion.identity);
 
         balls.Add(ball.GetComponent<Ball>());
         if(!balls[0]) {
             print("no ball comp");
-            UnityEditor.EditorApplication.isPlaying = false;
             return;
         }
 
-        enemyComp = enemy.GetComponent<Enemy>();
-        if(!enemyComp) {
-            print("no enemy comp");
-            UnityEditor.EditorApplication.isPlaying = false;
-            return;
+        if(enemy) {
+            enemyComp = enemy.GetComponent<Enemy>();
+            if(!enemyComp) {
+                print("no enemy comp");
+                return;
+            }
+            enemyComp.SetCurrentBall(balls[0]); 
         }
-
-        enemyComp.SetCurrentBall(balls[0]);
     }
 
     void FixedUpdate() {
-        enemyComp.SetCurrentBall(FindNearestBall());
+        if(enemyComp) {
+            enemyComp.SetCurrentBall(FindNearestBall()); 
+        }
     }
 
     void LateUpdate() {
         playerScoreText.text = "Player\n" + playerPoints;
         enemyScoreText.text = "Enemy\n" + enemyPoints;
+
+        if(playerPoints == 10 || enemyPoints == 10) {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+        }
     }
     #endregion
 
@@ -76,6 +83,9 @@ public class GameManager : MonoBehaviour {
         float closestDistance = float.PositiveInfinity;
         Ball closestBall = null;
         foreach(var b in balls) {
+            if(b.GetDirection().x < 0) {
+                continue;
+            }
             float dist = Vector3.Distance(b.transform.position, enemy.transform.position);
             if(dist < closestDistance) {
                 closestDistance = dist;
@@ -100,7 +110,9 @@ public class GameManager : MonoBehaviour {
                 balls.Remove(ball_);
                 Destroy(ball_.gameObject);
                 numBalls--;
-                enemyComp.SetCurrentBall(balls[0]);
+                if(enemyComp) {
+                    enemyComp.SetCurrentBall(balls[0]); 
+                }
                 return true;
             } else
                 return false;
@@ -110,4 +122,8 @@ public class GameManager : MonoBehaviour {
             return false;
         }
     }
+}
+
+public class GameMode {
+    public static bool isSingle = true  ;
 }
