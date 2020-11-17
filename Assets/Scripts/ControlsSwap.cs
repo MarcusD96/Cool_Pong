@@ -9,16 +9,19 @@ public class ControlsSwap : PowerUp {
 
     void Awake() {
         p = FindObjectOfType<Player>();
-        speed = 5;
+        speed = 7;
     }
 
     IEnumerator InvertControls() {
         sprite.sprite = null;
-        p.speed = -p.speed;
-        yield return new WaitForSeconds(3.0f);
-        p.speed = -p.speed;
+        speed = 0;
+        col.enabled = false;
+        p.ReverseSpeed();
+        yield return new WaitForSeconds(5.0f);
+        p.ReverseSpeed();
         Destroy(gameObject);
     }
+
     void OnTriggerEnter2D(Collider2D collision) {
         StartCoroutine(InvertControls());
     }

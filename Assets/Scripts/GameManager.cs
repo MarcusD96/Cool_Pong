@@ -125,5 +125,5 @@ public class GameManager : MonoBehaviour {
 }
 
 public class GameMode {
-    public static bool isSingle = true  ;
+    public static bool isSingle = true;
 }

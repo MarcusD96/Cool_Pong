@@ -4,10 +4,9 @@ using Mirror;
 
 public class Player : NetworkBehaviour {
 
-    public float speed, mouseSpeed;
     public SpriteRenderer sprite;
 
-    private float offset = 1.0f, dt;
+    private float offset = 1.0f, dt, speed, mouseSpeed;
     private Vector2 pos;
 
     Camera cam;
@@ -33,7 +32,7 @@ public class Player : NetworkBehaviour {
     }
 
     void FixedUpdate() {
-        //FollowMouseOnY();
+        FollowMouseOnY();
     }
 
 
@@ -50,6 +49,14 @@ public class Player : NetworkBehaviour {
             MoveVertically();
             CheckBoundaries();
         }
+    }
+
+    public void ToggleMouseControl() {
+        mouseControl = !mouseControl;
+    }
+
+    public void ReverseSpeed() {
+        speed = -speed;
     }
 
     void FollowMouseOnY() {

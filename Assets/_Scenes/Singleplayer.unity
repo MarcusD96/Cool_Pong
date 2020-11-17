@@ -950,6 +950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mbPrefab: {fileID: 6032070411846284989, guid: 34387798581442543ba9c7ae5c9da8c2, type: 3}
   csPrefab: {fileID: 1391226579920090331, guid: 4dcecd3f2c321174795d63bf6f24ddbb, type: 3}
+  mcPrefab: {fileID: 1373691447454313718, guid: c0ce3dfb84a56524ca666969842d2cce, type: 3}
 --- !u!1 &1329067784
 GameObject:
   m_ObjectHideFlags: 0

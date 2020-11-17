@@ -1,8 +1,8 @@
 ﻿
-using UnityEditor.UIElements;
 using UnityEngine;
+using Mirror;
 
-public class Ball : MonoBehaviour {
+public class Ball : NetworkBehaviour {
 
     public float speedMultiplier, speedBonus, velocityCurrent = 0;
     private float baseSpeed, dt;
@@ -47,11 +47,6 @@ public class Ball : MonoBehaviour {
         if(!Player.started)
             return;
 
-        if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) {
-            play = true;
-            //Cursor.visible = false;
-        }
-
         if(Time.time >= startTime + spawnTime)
             play = true;
 
@@ -65,6 +60,10 @@ public class Ball : MonoBehaviour {
 
         lastPos = transform.position;
 
+        MoveBall();
+    }
+
+    void MoveBall() {
         CheckBoundaries();
         transform.Translate(direction * dt * speedMultiplier, Space.World);
         CheckCollision();

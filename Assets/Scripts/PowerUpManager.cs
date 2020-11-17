@@ -1,13 +1,14 @@
 ﻿
 using UnityEngine;
+using Mirror;
 
-public class PowerUpManager : MonoBehaviour {
+public class PowerUpManager : NetworkBehaviour {
 
     RectTransform rt;
 
     public MultiBall mbPrefab;
     public ControlsSwap csPrefab;
-
+    public MouseControl mcPrefab;
 
     void Awake() {
         rt = GetComponent<RectTransform>();
@@ -22,21 +23,31 @@ public class PowerUpManager : MonoBehaviour {
         Instantiate(csPrefab, RandomSpawnPoint(), Quaternion.identity);
     }
 
+    void SpawnMouseControl() {
+        Instantiate(mcPrefab, RandomSpawnPoint(), Quaternion.identity);
+    }
+
     Vector3 RandomSpawnPoint() {
         float randX = Random.Range(rt.rect.xMin, rt.rect.xMax);
         float randY = Random.Range(rt.rect.yMin, rt.rect.yMax);
 
         return new Vector3(randX, randY, 0);
     }
-
+     
     void PickRandomPU() {
         if(!Player.started)
             return;
 
-        int n = Random.Range(0, 4);
-        if(n < 1) {
-            SpawnControlsSwap();
-        } else
-            SpawnMultiBall();
+        switch(Random.Range(0, 3)) {
+            case 0:
+                SpawnMultiBall();
+                break;
+            case 1:
+                SpawnMouseControl();
+                break;
+            case 2:
+                SpawnControlsSwap();
+                break;
+        }
     }
 }

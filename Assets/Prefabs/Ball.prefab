@@ -92,6 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4381447931167843260}
   - component: {fileID: 4381447931167843263}
+  - component: {fileID: 7736177336144196577}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -127,6 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da97027596c5025479c272b068dd55d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   speedMultiplier: 0.5
   speedBonus: 10
   velocityCurrent: 0
@@ -134,6 +137,22 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 55
+--- !u!114 &7736177336144196577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4381447931167843261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &6190358296195216996
 GameObject:
   m_ObjectHideFlags: 0

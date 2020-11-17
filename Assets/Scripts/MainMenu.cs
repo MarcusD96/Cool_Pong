@@ -1,9 +1,9 @@
 ﻿
-using UnityEngine;
 using UnityEngine.SceneManagement;
+using Mirror;
 
-public class MainMenu : MonoBehaviour
-{
+public class MainMenu : NetworkBehaviour {
+
     public void SinglePlayer() {
         GameMode.isSingle = true;
         SceneManager.LoadScene("Singleplayer");

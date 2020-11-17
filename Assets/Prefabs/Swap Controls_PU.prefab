@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6658076839392085297}
   - component: {fileID: 5873857329908177066}
   - component: {fileID: 1391226579920090331}
+  - component: {fileID: -2208050309702765104}
   m_Layer: 10
   m_Name: Swap Controls_PU
   m_TagString: Untagged
@@ -95,7 +96,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 8323176163363076368}
   col: {fileID: 6658076839392085297}
-  speed: 2
+--- !u!114 &-2208050309702765104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8323176161825929229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &8323176163363076369
 GameObject:
   m_ObjectHideFlags: 0

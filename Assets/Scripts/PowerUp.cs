@@ -21,6 +21,8 @@ public class PowerUp : MonoBehaviour {
                 dir = Vector3.right;
         } else
             dir = Vector3.left;
+        if(speed <= 0)
+            Debug.LogError("set speed dumbass");
     }
 
     protected void Update() {
@@ -29,5 +31,12 @@ public class PowerUp : MonoBehaviour {
         col.size = new Vector2(spriteSize, spriteSize);
 
         transform.Translate(dir.normalized * Time.deltaTime * speed, Space.World);
+        CheckDie();
+    }
+
+    void CheckDie() {
+        if(transform.position.x <= -8 || transform.position.x >= 8) {
+            Destroy(gameObject);
+        }
     }
 }
